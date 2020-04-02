@@ -1,4 +1,5 @@
 import os
+import requests
 
 from flask import Flask, session
 from flask_session import Session
@@ -23,4 +24,5 @@ db = scoped_session(sessionmaker(bind=engine))
 
 @app.route("/")
 def index():
-    return "Project 1: TODO"
+    return requests.get("https://www.goodreads.com/book/review_counts.json", params={"key": "5fI1wLvZOj028LGUwMrLdQ",
+                                                                                     "isbns": "0441172717"}).json()
