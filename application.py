@@ -39,3 +39,5 @@ def search():
 # if no book provided in the search bar return error
     if not request.args.get("book"):
         return render_template("error.html", message="you must provide a book.")
+        #   Take input
+        query = "%" + request.args.get("book") + "%"
