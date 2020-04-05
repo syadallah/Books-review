@@ -18,7 +18,11 @@ app.config["SESSION_TYPE"] = "filesystem"
 #Session(app)
 
 # Set up database
+# database engine object from SQLAlchemy that manages connections to the database
+
 engine = create_engine(os.getenv("DATABASE_URL"))
+# create a 'scoped session' that ensures different users' interactions with the
+# database are kept separate
 db = scoped_session(sessionmaker(bind=engine))
 
 
