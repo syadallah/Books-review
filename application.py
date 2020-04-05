@@ -34,3 +34,4 @@ def index():
     #                                                                                 "isbns": "1632168146"}).json()
     #print(res)
     #return res
+@app.route("/search", methods=["GET"])
