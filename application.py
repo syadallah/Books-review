@@ -1,4 +1,4 @@
-import os
+import os, json
 import requests
 
 from flask import Flask, session, render_template, request
@@ -35,3 +35,7 @@ def index():
     #print(res)
     #return res
 @app.route("/search", methods=["GET"])
+def search():
+# if no book provided in the search bar return error
+    if not request.args.get("book"):
+        return render_template("error.html", message="you must provide a book.")
