@@ -41,3 +41,17 @@ def search():
         return render_template("error.html", message="you must provide a book.")
         #   Take input
         query = "%" + request.args.get("book") + "%"
+        # make select from datbase where isbn, title, or author provided
+        rows = db.execute("SELECT isbn, title, author, year FROM books WHERE \
+                        isbn LIKE :query OR \
+                        title LIKE :query OR \
+                        author LIKE :query LIMIT 15",
+                        {"query": query})
+          # Books not founded
+    if rows.rowcount == 0:
+        return render_template("error.html", message="we can't find books with that description.")
+
+    # Fetch all the results
+    books = rows.fetchall()
+
+    return render_template("results.html", books=books)
