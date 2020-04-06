@@ -34,6 +34,9 @@ def index():
     #                                                                                 "isbns": "1632168146"}).json()
     #print(res)
     #return res
+@app.route("/register", methods=["GET", "POST"])
+def register():
+    
 @app.route("/search", methods=["GET"])
 def search():
 # if no book provided in the search bar return error
