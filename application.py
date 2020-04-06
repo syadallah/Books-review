@@ -36,6 +36,8 @@ def index():
     #return res
 @app.route("/register", methods=["GET", "POST"])
 def register():
+     # Forget any user_id
+    session.clear()
     
 @app.route("/search", methods=["GET"])
 def search():
