@@ -44,7 +44,12 @@ def register():
         # Ensure username was submitted
         if not request.form.get("username"):
             return render_template("error.html", message="must provide username")
-
+       # Query database for username
+        userCheck = db.execute("SELECT * FROM users WHERE username = :username",
+                          {"username":request.form.get("username")}).fetchone()
+                            # Check if username already exist
+        if userCheck:
+            return render_template("error.html", message="username already exist")
 @app.route("/search", methods=["GET"])
 def search():
 # if no book provided in the search bar return error
