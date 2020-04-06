@@ -1,10 +1,12 @@
 import os, json
 import requests
 
-from flask import Flask, session, render_template, request
+from flask import Flask, session, render_template, request, jsonify, flash
 from flask_session import Session
 from sqlalchemy import create_engine
 from sqlalchemy.orm import scoped_session, sessionmaker
+from werkzeug.security import check_password_hash, generate_password_hash
+
 
 app = Flask(__name__)
 
@@ -50,6 +52,39 @@ def register():
                             # Check if username already exist
         if userCheck:
             return render_template("error.html", message="username already exist")
+         # Ensure password was submitted
+        elif not request.form.get("password"):
+            return render_template("error.html", message="must provide password")
+
+        # Ensure confirmation wass submitted
+        elif not request.form.get("confirmation"):
+            return render_template("error.html", message="must confirm password")
+
+        # Check passwords are equal
+        elif not request.form.get("password") == request.form.get("confirmation"):
+            return render_template("error.html", message="passwords didn't match")
+
+               # Hash user's password to store in DB
+        hashedPassword = generate_password_hash(request.form.get("password"), method='pbkdf2:sha256', salt_length=8)
+
+        # Insert register into DB
+        db.execute("INSERT INTO users (username, hash) VALUES (:username, :password)",
+                            {"username":request.form.get("username"),
+                             "password":hashedPassword})
+
+        # Commit changes to database
+        db.commit()
+
+        flash('Account created', 'info')
+
+        # Redirect user to login page
+        return redirect("/login")
+
+    # User reached route via GET (as by clicking a link or via redirect)
+    else:
+        return render_template("register.html")
+
+
 @app.route("/search", methods=["GET"])
 def search():
 # if no book provided in the search bar return error
