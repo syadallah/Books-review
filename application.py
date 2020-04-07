@@ -6,7 +6,8 @@ from flask_session import Session
 from sqlalchemy import create_engine
 from sqlalchemy.orm import scoped_session, sessionmaker
 from werkzeug.security import check_password_hash, generate_password_hash
-
+from cachelib.file import FileSystemCache
+from werkzeug.middleware.proxy_fix import ProxyFix
 
 app = Flask(__name__)
 
