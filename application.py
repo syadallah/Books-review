@@ -191,3 +191,10 @@ def book(isbn):
         flash('Review submitted!', 'info')
 
         return redirect("/book/" + isbn)
+            else:
+
+        row = db.execute("SELECT isbn, title, author, year FROM books WHERE \
+                        isbn = :isbn",
+                        {"isbn": isbn})
+
+        bookInfo = row.fetchall()
