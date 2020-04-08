@@ -167,3 +167,7 @@ def book(isbn):
                         # Save id into variable
         bookId = row.fetchone() # (id,)
         bookId = bookId[0]
+        # Check for user submission (ONLY 1 review/user allowed per book)
+        row2 = db.execute("SELECT * FROM reviews WHERE user_id = :user_id AND book_id = :book_id",
+                    {"user_id": currentUser,
+                     "book_id": bookId})
