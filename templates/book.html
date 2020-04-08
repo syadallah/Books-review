@@ -1,0 +1,18 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    {{bookInfo[0]['title']}}
+{% endblock %}
+
+{% block content %}
+
+    <div class="row book-container">
+        <div class="col-sm-4">
+            <img src="http://covers.openlibrary.org/b/isbn/{{bookInfo[0]['isbn']}}-M.jpg" width="130px">
+        </div>
+        <div class="col-sm-4">
+            <h1>{{bookInfo[0]['title']}}</h1>
+            <h5>Author: {{bookInfo[0]['author']}}</h5>
+            <h5>Published: {{bookInfo[0]['year']}}</h5>
+            <h5>ISBN-10: {{bookInfo[0]['isbn']}}</h5>
+        </div>
