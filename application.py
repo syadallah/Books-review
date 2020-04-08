@@ -129,6 +129,7 @@ def register():
 
 
 @app.route("/search", methods=["GET"])
+@login_required
 def search():
 # if no book provided in the search bar return error
     if not request.args.get("book"):
@@ -142,13 +143,13 @@ def search():
                         author LIKE :query LIMIT 15",
                         {"query": query})
           # Books not founded
-    if rows.rowcount == 0:
-        return render_template("error.html", message="we can't find books with that description.")
+        if rows.rowcount == 0:
+            return render_template("error.html", message="we can't find books with that description.")
 
     # Fetch all the results
-    books = rows.fetchall()
+        books = rows.fetchall()
 
-    return render_template("results.html", books=books)
+        return render_template("results.html", books=books)
 
 @app.route("/book/<isbn>", methods=['GET','POST'])
 @login_required
@@ -238,3 +239,36 @@ def book(isbn):
         reviews = results.fetchall()
 
         return render_template("book.html", bookInfo=bookInfo, reviews=reviews)
+@app.route("/api/<isbn>", methods=['GET'])
+@login_required
+def api_call(isbn):
+
+    # COUNT returns rowcount
+    # SUM returns sum selected cells' values
+    # INNER JOIN associates books with reviews tables
+
+    row = db.execute("SELECT title, author, year, isbn, \
+                    COUNT(reviews.id) as review_count, \
+                    AVG(reviews.rating) as average_score \
+                    FROM books \
+                    INNER JOIN reviews \
+                    ON books.id = reviews.book_id \
+                    WHERE isbn = :isbn \
+                    GROUP BY title, author, year, isbn",
+                    {"isbn": isbn})
+
+    # Error checking
+    if row.rowcount != 1:
+        return jsonify({"Error": "Invalid book ISBN"}), 422
+
+    # Fetch result from RowProxy
+    tmp = row.fetchone()
+
+    # Convert to dict
+    result = dict(tmp.items())
+
+    # Round Avg Score to 2 decimal. This returns a string which does not meet the requirement.
+    # https://floating-point-gui.de/languages/python/
+    result['average_score'] = float('%.2f'%(result['average_score']))
+
+    return jsonify(result)
