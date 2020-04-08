@@ -198,3 +198,19 @@ def book(isbn):
                         {"isbn": isbn})
 
         bookInfo = row.fetchall()
+
+        # Read API key from env variable
+        key = os.getenv("GOODREADS_KEY")
+
+        # Query the api with key and ISBN as parameters
+        query = requests.get("https://www.goodreads.com/book/review_counts.json",
+                params={"key": key, "isbns": isbn})
+
+        # Convert the response to JSON
+        response = query.json()
+
+        # "Clean" the JSON before passing it to the bookInfo list
+        response = response['books'][0]
+
+        # Append it as the second element on the list. [1]
+        bookInfo.append(response)
