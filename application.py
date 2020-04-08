@@ -171,3 +171,17 @@ def book(isbn):
         row2 = db.execute("SELECT * FROM reviews WHERE user_id = :user_id AND book_id = :book_id",
                     {"user_id": currentUser,
                      "book_id": bookId})
+                           # A review already exists
+        if row2.rowcount == 1:
+
+            flash('You already submitted a review for this book', 'warning')
+            return redirect("/book/" + isbn)
+                    # Convert to save into DB
+        rating = int(rating)
+
+        db.execute("INSERT INTO reviews (user_id, book_id, comment, rating) VALUES \
+                    (:user_id, :book_id, :comment, :rating)",
+                    {"user_id": currentUser,
+                    "book_id": bookId,
+                    "comment": comment,
+                    "rating": rating})
