@@ -58,3 +58,21 @@
             </div>
         </div>
     </form>
+    <div id="userReviews">
+    <h2></h2>
+    {% for review in reviews %}
+    <div class="list-group">
+        <a href="#" class="list-group-item list-group-item-action flex-column align-items-start">
+            <div class="d-flex w-100 justify-content-between">
+                <h6 class="mb-1" style="color:burlywood">{{review['username']}} said...</h6>
+                <small>{{review['time']}}</small>
+            </div>
+            <p class="mb-1">{{review['comment']}}</p>
+            <small>Rated: {{review['rating']}}</small>
+        </a>
+        <div class="dropdown-divider"></div>
+    </div>
+    {% endfor %}
+</div>
+</div>
+{% endblock %}
