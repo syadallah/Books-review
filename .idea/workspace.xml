@@ -4,7 +4,6 @@
     <list default="true" id="5cab0503-e2c1-436a-873b-7c813fbe58f0" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/application.py" beforeDir="false" afterPath="$PROJECT_DIR$/application.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -64,6 +63,7 @@
       <workItem from="1585947655635" duration="771000" />
       <workItem from="1586112744165" duration="729000" />
       <workItem from="1586222763556" duration="38000" />
+      <workItem from="1586366755866" duration="528000" />
     </task>
     <servers />
   </component>
@@ -75,13 +75,13 @@
       <screen x="61" y="27" width="1859" height="1053" />
     </state>
     <state x="585" y="214" width="800" height="677" key="#Inspections/61.27.1859.1053@61.27.1859.1053" timestamp="1585947814227" />
-    <state x="479" y="188" key="SettingsEditor" timestamp="1586112802902">
+    <state x="479" y="188" key="SettingsEditor" timestamp="1586366830705">
       <screen x="61" y="27" width="1859" height="1053" />
     </state>
-    <state x="479" y="188" key="SettingsEditor/61.27.1859.1053@61.27.1859.1053" timestamp="1586112802902" />
-    <state x="646" y="380" key="com.intellij.ide.util.TipDialog" timestamp="1586222768124">
+    <state x="479" y="188" key="SettingsEditor/61.27.1859.1053@61.27.1859.1053" timestamp="1586366830705" />
+    <state x="646" y="380" key="com.intellij.ide.util.TipDialog" timestamp="1586366758529">
       <screen x="61" y="27" width="1859" height="1053" />
     </state>
-    <state x="646" y="380" key="com.intellij.ide.util.TipDialog/61.27.1859.1053@61.27.1859.1053" timestamp="1586222768124" />
+    <state x="646" y="380" key="com.intellij.ide.util.TipDialog/61.27.1859.1053@61.27.1859.1053" timestamp="1586366758529" />
   </component>
 </project>

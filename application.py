@@ -1,7 +1,7 @@
 import os, json
 import requests
 
-from flask import Flask, session, render_template, request, jsonify, flash
+from flask import Flask, session, redirect, render_template, request, jsonify, flash
 from flask_session import Session
 from sqlalchemy import create_engine
 from sqlalchemy.orm import scoped_session, sessionmaker
@@ -40,17 +40,39 @@ def index():
 
 @app.route("/login", methods=["GET", "POST"])
 def login():
-  session.clear()
+    session.clear()
 
     username = request.form.get("username")
     # Redirect user to home page
-        return redirect("/")
+    return redirect("/")
             # User reached route via POST (as by submitting a form via POST)
     if request.method == "POST":
 
         # Ensure username was submitted
         if not request.form.get("username"):
             return render_template("error.html", message="must provide username")
+                  # Ensure password was submitted
+        elif not request.form.get("password"):
+            return render_template("error.html", message="must provide password")
+
+        # Query database for username (http://zetcode.com/db/sqlalchemy/rawsql/)
+        # https://docs.sqlalchemy.org/en/latest/core/connections.html#sqlalchemy.engine.ResultProxy
+        rows = db.execute("SELECT * FROM users WHERE username = :username",
+                            {"username": username})
+
+        result = rows.fetchone()
+
+        # Ensure username exists and password is correct
+        if result == None or not check_password_hash(result[2], request.form.get("password")):
+            return render_template("error.html", message="invalid username and/or password")
+
+        # Remember which user has logged in
+        session["user_id"] = result[0]
+        session["user_name"] = result[1]
+
+        # Redirect user to home page
+        return redirect("/")
+
 
     # User reached route via GET (as by clicking a link or via redirect)
     else:
