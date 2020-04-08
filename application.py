@@ -9,6 +9,8 @@ from werkzeug.security import check_password_hash, generate_password_hash
 from cachelib.file import FileSystemCache
 from werkzeug.middleware.proxy_fix import ProxyFix
 
+from helpers import login_required
+
 app = Flask(__name__)
 
 # Check for environment variable
@@ -191,7 +193,7 @@ def book(isbn):
         flash('Review submitted!', 'info')
 
         return redirect("/book/" + isbn)
-            else:
+    else:
 
         row = db.execute("SELECT isbn, title, author, year FROM books WHERE \
                         isbn = :isbn",
