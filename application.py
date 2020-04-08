@@ -164,3 +164,6 @@ def book(isbn):
         # Search book_id by ISBN
         row = db.execute("SELECT id FROM books WHERE isbn = :isbn",
                         {"isbn": isbn})
+                        # Save id into variable
+        bookId = row.fetchone() # (id,)
+        bookId = bookId[0]
