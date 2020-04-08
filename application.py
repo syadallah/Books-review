@@ -46,7 +46,7 @@ def login():
 
     username = request.form.get("username")
     # Redirect user to home page
-    return redirect("/")
+    
             # User reached route via POST (as by submitting a form via POST)
     if request.method == "POST":
 
