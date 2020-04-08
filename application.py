@@ -37,6 +37,10 @@ def index():
     #                                                                                 "isbns": "1632168146"}).json()
     #print(res)
     #return res
+    
+@app.route("/login", methods=["GET", "POST"])
+def login():
+
 @app.route("/register", methods=["GET", "POST"])
 def register():
      # Forget any user_id
