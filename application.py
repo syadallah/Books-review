@@ -147,7 +147,20 @@ def search():
     books = rows.fetchall()
 
     return render_template("results.html", books=books)
-    
+
 @app.route("/book/<isbn>", methods=['GET','POST'])
 @login_required
 def book(isbn):
+
+    if request.method == "POST":
+
+        # Save current user info
+        currentUser = session["user_id"]
+
+        # Fetch form data
+        rating = request.form.get("rating")
+        comment = request.form.get("comment")
+
+        # Search book_id by ISBN
+        row = db.execute("SELECT id FROM books WHERE isbn = :isbn",
+                        {"isbn": isbn})
