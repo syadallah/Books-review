@@ -185,3 +185,9 @@ def book(isbn):
                     "book_id": bookId,
                     "comment": comment,
                     "rating": rating})
+                          # Commit transactions to DB and close the connection
+        db.commit()
+
+        flash('Review submitted!', 'info')
+
+        return redirect("/book/" + isbn)
