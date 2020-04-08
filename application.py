@@ -79,6 +79,16 @@ def login():
     # User reached route via GET (as by clicking a link or via redirect)
     else:
         return render_template("login.html")
+
+@app.route("/logout")
+def logout():
+
+    # Forget any user ID
+    session.clear()
+
+    # Redirect user to login form
+    return redirect("/")
+
 @app.route("/register", methods=["GET", "POST"])
 def register():
      # Forget any user_id
