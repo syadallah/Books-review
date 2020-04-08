@@ -214,3 +214,25 @@ def book(isbn):
 
         # Append it as the second element on the list. [1]
         bookInfo.append(response)
+                 # Search book_id by ISBN
+        row = db.execute("SELECT id FROM books WHERE isbn = :isbn",
+                        {"isbn": isbn})
+
+        # Save id into variable
+        book = row.fetchone() # (id,)
+        book = book[0]
+
+        # Fetch book reviews
+        # Date formatting (https://www.postgresql.org/docs/9.1/functions-formatting.html)
+        results = db.execute("SELECT users.username, comment, rating, \
+                            to_char(time, 'DD Mon YY - HH24:MI:SS') as time \
+                            FROM users \
+                            INNER JOIN reviews \
+                            ON users.id = reviews.user_id \
+                            WHERE book_id = :book \
+                            ORDER BY time",
+                            {"book": book})
+
+        reviews = results.fetchall()
+
+        return render_template("book.html", bookInfo=bookInfo, reviews=reviews)
