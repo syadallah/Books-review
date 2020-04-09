@@ -46,7 +46,7 @@ def login():
 
     username = request.form.get("username")
     # Redirect user to home page
-    
+
             # User reached route via POST (as by submitting a form via POST)
     if request.method == "POST":
 
@@ -152,14 +152,15 @@ def search():
                         title LIKE :query OR \
                         author LIKE :query LIMIT 15",
                         {"query": query})
-          # Books not founded
-        if rows.rowcount == 0:
-            return render_template("error.html", message="we can't find books with that description.")
-
-    # Fetch all the results
+                            # Fetch all the results
         books = rows.fetchall()
 
         return render_template("results.html", books=books)
+          # Books not founded
+    else:
+        return render_template("error.html", message="we can't find books with that description.")
+
+
 
 @app.route("/book/<isbn>", methods=['GET','POST'])
 @login_required
@@ -249,6 +250,7 @@ def book(isbn):
         reviews = results.fetchall()
 
         return render_template("book.html", bookInfo=bookInfo, reviews=reviews)
+        
 @app.route("/api/<isbn>", methods=['GET'])
 @login_required
 def api_call(isbn):
