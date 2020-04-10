@@ -1,13 +1,15 @@
 import os, json
-import requests
 
 from flask import Flask, session, redirect, render_template, request, jsonify, flash
 from flask_session import Session
+
+from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import create_engine
 from sqlalchemy.orm import scoped_session, sessionmaker
+
 from werkzeug.security import check_password_hash, generate_password_hash
-from cachelib.file import FileSystemCache
-from werkzeug.middleware.proxy_fix import ProxyFix
+#from cachelib.file import FileSystemCache
+#from werkzeug.middleware.proxy_fix import ProxyFix
 
 from helpers import login_required
 
@@ -146,6 +148,9 @@ def search():
         return render_template("error.html", message="you must provide a book.")
         #   Take input
         query = "%" + request.args.get("book") + "%"
+
+        query = query.title()
+
         # make select from datbase where isbn, title, or author provided
         rows = db.execute("SELECT isbn, title, author, year FROM books WHERE \
                         isbn LIKE :query OR \
@@ -250,7 +255,7 @@ def book(isbn):
         reviews = results.fetchall()
 
         return render_template("book.html", bookInfo=bookInfo, reviews=reviews)
-        
+
 @app.route("/api/<isbn>", methods=['GET'])
 @login_required
 def api_call(isbn):
