@@ -55,10 +55,10 @@ def login():
 
         # Ensure username was submitted
         if not request.form.get("username"):
-            return render_template("error.html", message="must provide username")
+            return render_template("error.html", message="Must provide username")
                   # Ensure password was submitted
         elif not request.form.get("password"):
-            return render_template("error.html", message="must provide password")
+            return render_template("error.html", message="Must provide password")
 
         # Query database for username (http://zetcode.com/db/sqlalchemy/rawsql/)
         # https://docs.sqlalchemy.org/en/latest/core/connections.html#sqlalchemy.engine.ResultProxy
@@ -69,7 +69,7 @@ def login():
 
         # Ensure username exists and password is correct
         if result == None or not check_password_hash(result[2], request.form.get("password")):
-            return render_template("error.html", message="invalid username and/or password")
+            return render_template("error.html", message="Invalid username and/or password")
 
         # Remember which user has logged in
         session["user_id"] = result[0]
@@ -101,24 +101,24 @@ def register():
 
         # Ensure username was submitted
         if not request.form.get("username"):
-            return render_template("error.html", message="must provide username")
+            return render_template("error.html", message="Must provide username")
        # Query database for username
         userCheck = db.execute("SELECT * FROM users WHERE username = :username",
                           {"username":request.form.get("username")}).fetchone()
                             # Check if username already exist
         if userCheck:
-            return render_template("error.html", message="username already exist")
+            return render_template("error.html", message="Username already exist")
          # Ensure password was submitted
         elif not request.form.get("password"):
-            return render_template("error.html", message="must provide password")
+            return render_template("error.html", message="Must provide password")
 
         # Ensure confirmation wass submitted
         elif not request.form.get("confirmation"):
-            return render_template("error.html", message="must confirm password")
+            return render_template("error.html", message="Must confirm password")
 
         # Check passwords are equal
         elif not request.form.get("password") == request.form.get("confirmation"):
-            return render_template("error.html", message="passwords didn't match")
+            return render_template("error.html", message="Passwords didn't match")
 
                # Hash user's password to store in DB
         hashedPassword = generate_password_hash(request.form.get("password"), method='pbkdf2:sha256', salt_length=8)
@@ -146,7 +146,7 @@ def register():
 def search():
 # if no book provided in the search bar return error
     if not request.args.get("book"):
-        return render_template("error.html", message="you must provide a book.")
+        return render_template("error.html", message="You must provide a book.")
         #   Take input
     if request.args.get("book"):
 
@@ -166,7 +166,7 @@ def search():
         return render_template("results.html", books=books)
           # Books not founded
     else:
-        return render_template("error.html", message="we can't find books with that description.")
+        return render_template("error.html", message="We can't find books with that description.")
 
 
 
