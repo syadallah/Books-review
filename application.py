@@ -1,4 +1,5 @@
 import os, json
+import requests
 
 from flask import Flask, session, redirect, render_template, request, jsonify, flash
 from flask_session import Session
@@ -147,7 +148,7 @@ def search():
     if not request.args.get("book"):
         return render_template("error.html", message="you must provide a book.")
         #   Take input
-    elif request.args.get("book"):
+    if request.args.get("book"):
 
         query = "%" + request.args.get("book") + "%"
 
