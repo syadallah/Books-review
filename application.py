@@ -147,6 +147,8 @@ def search():
     if not request.args.get("book"):
         return render_template("error.html", message="you must provide a book.")
         #   Take input
+    elif request.args.get("book"):
+
         query = "%" + request.args.get("book") + "%"
 
         query = query.title()
